@@ -1,4 +1,4 @@
-name: Push to 
+name: Push to Docker
 on:
   push:
     branches: [ "main" ]
