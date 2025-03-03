@@ -1,0 +1,51 @@
+name: Run SAST and SCA jobs
+
+# Run when a push/pull request is made to the main branch
+on:
+    push:
+        branches: [ "main" ]
+    pull_request: 
+        branches: [ "main" ]
+
+jobs:
+    # Runs a semgrep SAST scan
+    semgrep:
+        name: semgrep/ci
+        runs-on: ubuntu-latest
+        container:
+            image: semgrep/semgrep
+        if: (github.actor != 'dependabot[bot]')
+        steps:
+            - name: Clone app code
+              uses: actions/checkout@v4
+
+            - name: Run semgrep scan
+              run: semgrep ci --sarif-output=semgrep.sarif
+              env:
+                SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+                
+            - name: Upload report
+              uses: actions/upload-artifact@v4
+              with:
+                name: semgrep.sarif
+                path: semgrep.sarif
+            
+    snyk:
+      name: snyk
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v4
+      - name: Run snyk to check docker image for vulnerabilties
+        uses: snyk/actions/docker@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          image: kevyy/assignment01:latest
+          args: --file=Dockerfile
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: snyk-sca.sarif
+          path: snyk.sarif
+          
