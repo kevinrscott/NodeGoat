@@ -3,9 +3,9 @@ name: Run SAST and SCA jobs
 # Run when a push/pull request is made to the main branch
 on:
     push:
-        branches: [ "main" ]
+        branches: [ "master" ]
     pull_request: 
-        branches: [ "main" ]
+        branches: [ "master" ]
 
 jobs:
     # Runs a semgrep SAST scan
