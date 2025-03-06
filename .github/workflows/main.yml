@@ -46,7 +46,7 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          image: ${{ secrets.DOCKER_USERNAME }}/assignment01:latest
+          image: kevyy/assignment01:latest
           args: --file=Dockerfile
       - name: Upload report
         uses: actions/upload-artifact@v4
