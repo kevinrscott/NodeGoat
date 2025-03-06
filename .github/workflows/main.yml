@@ -11,7 +11,7 @@ jobs:
     # Runs a semgrep SAST scan
     semgrep:
         name: semgrep/ci
-        runs-on: ubuntu-latest
+        runs-on: self-hosted
         container:
             image: semgrep/semgrep
         if: (github.actor != 'dependabot[bot]')
@@ -32,7 +32,7 @@ jobs:
             
     snyk:
       name: snyk
-      runs-on: ubuntu-latest
+      runs-on: self-hosted
       steps:
       - uses: actions/checkout@v4
       - name: Login to Docker Hub
