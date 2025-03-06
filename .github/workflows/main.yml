@@ -16,6 +16,9 @@ jobs:
             image: semgrep/semgrep
         if: (github.actor != 'dependabot[bot]')
         steps:
+            - name: Fix permissions on the temp directory
+              run: sudo chmod -R 777 /__w/_temp
+
             - name: Clone app code
               uses: actions/checkout@v4
 
