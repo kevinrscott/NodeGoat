@@ -1,6 +1,5 @@
-name: Run SAST and SCA jobs
+name: Run SAST and SCA jobs - Part 1
 
-# Run when a push/pull request is made to the main branch
 on:
     push:
         branches: [ "master" ]
@@ -30,7 +29,7 @@ jobs:
               with:
                 name: semgrep.sarif
                 path: semgrep.sarif
-            
+    # Runs a snyk SCA scan    
     snyk:
       name: snyk
       runs-on: ubuntu-latest
