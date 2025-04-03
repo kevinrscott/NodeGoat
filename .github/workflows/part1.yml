@@ -22,8 +22,8 @@ jobs:
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
+          embed-color: 1417704
               
-
   # Runs a semgrep SAST scan
   semgrep:
     name: semgrep/ci
