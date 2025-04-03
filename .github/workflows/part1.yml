@@ -22,7 +22,9 @@ jobs:
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
-          embed-color: 1417704
+          embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
+          embed-color: 629
+          embed-footer-text: "Preparing to run security scans..."
               
   # Runs a semgrep SAST scan
   semgrep:
@@ -87,3 +89,6 @@ jobs:
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
+          embed-color: 9816324
+          embed-footer-text: "Security scans completed..."
