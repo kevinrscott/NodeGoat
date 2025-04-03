@@ -83,7 +83,7 @@ jobs:
           with:
             name: snyk.sarif
         - name: Discord Notification Synk Scan Complete
-        - uses: tsickert/discord-webhook@v5.3.0
+          uses: tsickert/discord-webhook@v5.3.0
           with:
             webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
             username: ${{github.repository}}
