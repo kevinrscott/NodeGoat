@@ -81,7 +81,7 @@ jobs:
         - name: Download snyk.sarif artifact
           uses: actions/download-artifact@v4.2.1
           with:
-            name: snyk.sarif
+            name: snyk-sca.sarif
         - name: Discord Notification Synk Scan Complete
           uses: tsickert/discord-webhook@v5.3.0
           with:
