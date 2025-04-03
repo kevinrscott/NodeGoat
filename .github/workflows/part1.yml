@@ -16,18 +16,13 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          username: ${{ github.repository }}
+          username: ${{github.repository}}
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
-          embeds: |
-            [{
-              "title": "Security Pipeline jobs are starting...",
-              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "description": "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
-              "author": {
-                "name": "${{ github.triggering_actor }}"
-              },
-              "color": "#70B0FF"
-            }]
+          embed-title: "Security Pipeline jobs are starting..."
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-author-name: "${{ github.triggering_actor }}"
+              
 
   # Runs a semgrep SAST scan
   semgrep:
@@ -86,15 +81,9 @@ jobs:
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          username: ${{ github.repository }}
+          username: ${{github.repository}}
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
-          embeds: |
-            [{
-              "title": "Security Pipeline jobs completed!",
-              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
-              "description": "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
-              "author": {
-                "name": "${{ github.triggering_actor }}"
-              },
-              "color": "#70B0FF"
-            }]
+          embed-title: "Security Pipeline jobs Completed."
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-author-name: "${{ github.triggering_actor }}"
