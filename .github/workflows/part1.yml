@@ -79,7 +79,7 @@ jobs:
     needs: [snyk]
     steps:
         - name: Download snyk.sarif artifact
-          uses: actions/download-artifact@v2
+          uses: actions/download-artifact@v4.2.1
           with:
             name: snyk.sarif
         - name: Discord Notification Synk Scan Complete
