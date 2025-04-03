@@ -73,6 +73,21 @@ jobs:
         with:
           name: snyk-sca.sarif
           path: snyk.sarif
+      - uses: actions/checkout@v2
+      - name: Discord Notification SNYK scan
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: ${{github.repository}}
+          avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
+          embed-title: "Snyk Scan Completed"
+          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-author-name: "${{ github.triggering_actor }}"
+          embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
+          filename: snyk.sarif
+          embed-color: 629
+          embed-footer-text: "Snyk Scan Completed."
 
   # Post a message to the ITAS Discord Channel when Pipeline finishes.
   Discord-Finish:
@@ -90,5 +105,5 @@ jobs:
           embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
-          embed-color: 9816324
-          embed-footer-text: "Security scans completed..."
+          embed-color: 629
+          embed-footer-text: "Security scans completed."
