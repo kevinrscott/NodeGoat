@@ -8,61 +8,62 @@ on:
         branches: [ "master" ]
 
 jobs:
-    # Post a message to the ITAS Discord channel with pipeline updates.
-    Discord-Begin:
-      runs-on: ubuntu-latest
-      steps:
+  # Post a message to the ITAS Discord channel with pipeline updates.
+  Discord-Begin:
+    runs-on: ubuntu-latest
+    steps:
       - name: Discord Notification start
         uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          username: ${{github.repository}}
+          username: ${{ github.repository }}
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
-          embed-title: "Security Pipeline jobs are starting..."
-          embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-          embed-author-name: "${{ github.triggering_actor }}"
-    # Runs a semgrep SAST scan
-    semgrep:
-        name: semgrep/ci
-        runs-on: ubuntu-latest
-        container:
-            image: semgrep/semgrep
-        if: (github.actor != 'dependabot[bot]')
-        steps:
-            # Clones app code for semgrep to scan
-            - name: Clone app code
-              uses: actions/checkout@v4
-            # Runs the scan with semgrep token setting the outfit to be "semgrep.sarif"
-            - name: Run semgrep scan
-              run: semgrep ci --sarif-output=semgrep.sarif
-              env:
-                SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
-            # Uploads the created scan file as an artifact
-            - name: Upload report
-              uses: actions/upload-artifact@v4
-              with:
-                name: semgrep.sarif
-                path: semgrep.sarif
-    # Run a snyk SCA scan
-    snyk:
-      name: snyk
-      runs-on: ubuntu-latest
-      steps:
-      # Clones app code for snyk to scan
+          embeds: |
+            [{
+              "title": "Security Pipeline jobs are starting...",
+              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "description": "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
+              "author": {
+                "name": "${{ github.triggering_actor }}"
+              },
+              "color": "#70B0FF"
+            }]
+
+  # Runs a semgrep SAST scan
+  semgrep:
+    name: semgrep/ci
+    runs-on: ubuntu-latest
+    container:
+        image: semgrep/semgrep
+    if: (github.actor != 'dependabot[bot]')
+    steps:
       - name: Clone app code
         uses: actions/checkout@v4
-      # Logs in to docker hub to enable viewing private dockerhub repo
+      - name: Run semgrep scan
+        run: semgrep ci --sarif-output=semgrep.sarif
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
+      - name: Upload report
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep.sarif
+          path: semgrep.sarif
+
+  # Run a snyk SCA scan
+  snyk:
+    name: snyk
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone app code
+        uses: actions/checkout@v4
       - name: Login to Docker Hub
         uses: docker/login-action@v3.3.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      # Pulls docker image for snyk to use   
       - name: Pull Docker image
         run: docker pull kevyy/assignment01:latest
-      # Runs the scan on the latest app code for 'kevyy/assignment01' repo on dockerhub
-      - name: Run snyk to check docker image for vulnerabilties
+      - name: Run snyk to check docker image for vulnerabilities
         uses: snyk/actions/docker@master
         continue-on-error: true
         env:
@@ -70,25 +71,30 @@ jobs:
         with:
           image: kevyy/assignment01:latest
           args: --file=Dockerfile
-      # Uploads scan results as an artifact
       - name: Upload report
         uses: actions/upload-artifact@v4
         with:
           name: snyk-sca.sarif
           path: snyk.sarif
-    # Post a message to the ITAS Discord Channel when Pipeline finishes.
-    Discord-Finish:
-        runs-on: ubuntu-latest
-        needs: [semgrep, snyk]
-        steps:
-        - name: Discord Notification End
-          uses: tsickert/discord-webhook@v5.3.0
-          with:
-              webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-              username: ${{github.repository}}
-              avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
-              embed-title: "Security Pipeline jobs completed!"
-              embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-              embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-              embed-author-name: "${{ github.triggering_actor }}" 
-            
+
+  # Post a message to the ITAS Discord Channel when Pipeline finishes.
+  Discord-Finish:
+    runs-on: ubuntu-latest
+    needs: [semgrep, snyk]
+    steps:
+      - name: Discord Notification End
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          username: ${{ github.repository }}
+          avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
+          embeds: |
+            [{
+              "title": "Security Pipeline jobs completed!",
+              "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+              "description": "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})",
+              "author": {
+                "name": "${{ github.triggering_actor }}"
+              },
+              "color": "#70B0FF"
+            }]
