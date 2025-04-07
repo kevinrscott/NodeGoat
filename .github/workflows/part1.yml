@@ -30,6 +30,8 @@ jobs:
   semgrep:
     name: semgrep/ci
     runs-on: ubuntu-latest
+    outputs:
+        semgrep-url: ${{ steps.upload-semgrep.outputs.artifact-url }}
     container:
         image: semgrep/semgrep
     if: (github.actor != 'dependabot[bot]')
@@ -42,6 +44,7 @@ jobs:
           SEMGREP_APP_TOKEN: ${{ secrets.SEMGREP_APP_TOKEN }}
       - name: Upload report
         uses: actions/upload-artifact@v4
+        id: upload-semgrep
         with:
           name: semgrep.sarif
           path: semgrep.sarif
@@ -107,7 +110,7 @@ jobs:
               avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
               embed-title: "Semgrep Scan Completed"
               embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-              embed-description: "Semgrep Security Scan has been successfully completed."
+              embed-description: "Uploaded Report: [Semgrep Sarif Report](${{ needs.semgrep.outputs.semgrep-url }})"
               embed-author-name: "${{ github.triggering_actor }}"
               embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
               embed-color: 629
