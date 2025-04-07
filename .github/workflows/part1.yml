@@ -78,40 +78,19 @@ jobs:
     runs-on: ubuntu-latest
     needs: [snyk]
     steps:
-        - name: Download snyk.sarif artifact
-          uses: actions/download-artifact@v4.2.1
-          with:
-            name: snyk-sca.sarif
         - name: Discord Notification Synk Scan Complete
           uses: tsickert/discord-webhook@v5.3.0
           with:
             webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
             username: ${{github.repository}}
             avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
-            embeds: |
-                [
-                    {
-                        "title": "Snyk Scan Completed",
-                        "description": "",
-                        "color": 629,
-                        "author": {
-                            "name": "${{ github.triggering_actor }}",
-                            "icon-url": "https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200"
-                        },
-                        "footer": {
-                            "text": "Snyk Scan Completed. Artifact available for download."
-                        },
-                        "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-                    }
-                ]
-            #embed-title: "Snyk Scan Completed"
-            #embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            #embed-description: "Uploaded File:"
-            #embed-author-name: "${{ github.triggering_actor }}"
-            #embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
-            #embed-color: 629
-            #embed-footer-text: "Snyk Scan Completed."
-            #filename: snyk.sarif
+            embed-title: "Snyk Scan Completed"
+            embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            embed-description: "[Download SARIF report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts)"
+            embed-author-name: "${{ github.triggering_actor }}"
+            embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
+            embed-color: 629
+            embed-footer-text: "Snyk Scan Completed."
 
   # Post a message to the ITAS Discord Channel when Pipeline finishes.
   Discord-Finish:
