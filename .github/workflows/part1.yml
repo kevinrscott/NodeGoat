@@ -24,7 +24,7 @@ jobs:
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
           embed-color: 629
-          embed-footer-text: "Preparing to run security scans..."
+          embed-footer-text: "Preparing to run SNYK and SEMGREP scans..."
               
   # Runs a semgrep SAST scan
   semgrep:
@@ -133,4 +133,4 @@ jobs:
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
           embed-color: 629
-          embed-footer-text: "Security scans completed."
+          embed-footer-text: "SNYK and SEMGREP security scans both successfully completed.
