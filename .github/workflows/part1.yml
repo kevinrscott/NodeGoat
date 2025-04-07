@@ -89,11 +89,11 @@ jobs:
             avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
             embed-title: "Snyk Scan Completed"
             embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            embed-description: "[Download SNYK Scan report](${{ needs.snyk.outputs.artifact-url }})"
+            embed-description: "Uploaded Report: [SNYK Sarif Report](${{ needs.snyk.outputs.artifact-url }})"
             embed-author-name: "${{ github.triggering_actor }}"
             embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
             embed-color: 629
-            embed-footer-text: "Snyk Scan Completed."
+            embed-footer-text: "Snyk Scan Completed. Cick above link to download report."
 
   # Post a message to the ITAS Discord Channel when Pipeline finishes.
   Discord-Finish:
