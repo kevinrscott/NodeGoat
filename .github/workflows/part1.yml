@@ -20,7 +20,7 @@ jobs:
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
           embed-title: "Security Pipeline jobs are starting..."
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-description: "Security Scans Starting: [Details - ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
           embed-color: 629
@@ -33,7 +33,6 @@ jobs:
     outputs:
         # Sets artifact url to a variable for discord notifactions to use
         semgrep-url: ${{ steps.upload-semgrep.outputs.artifact-url }}
-        semgrep-id: ${{ github.run_id }}
     container:
         image: semgrep/semgrep
     if: (github.actor != 'dependabot[bot]')
@@ -58,7 +57,6 @@ jobs:
     outputs:
         # Sets artifact url to a variable for discord notifactions to use
         artifact-url: ${{ steps.upload-snyk.outputs.artifact-url }}
-        snyk-id: ${{ github.run_id }}
     steps:
       - name: Clone app code
         uses: actions/checkout@v4
@@ -96,7 +94,7 @@ jobs:
             username: ${{github.repository}}
             avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
             embed-title: "Snyk Scan Completed"
-            embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ needs.snyk.outputs.snyk-id }}"
+            embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             # Uses the output from the snyk scan for artifact download.
             embed-description: "Uploaded Report: [SNYK Sarif Report](${{ needs.snyk.outputs.artifact-url }})"
             embed-author-name: "${{ github.triggering_actor }}"
@@ -116,7 +114,7 @@ jobs:
               username: ${{github.repository}}
               avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
               embed-title: "Semgrep Scan Completed"
-              embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/job/${{ needs.semgrep.outputs.semgrep-id }}"
+              embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
               # Uses the output from the semgrep scan for artifact download.
               embed-description: "Uploaded Report: [Semgrep Sarif Report](${{ needs.semgrep.outputs.semgrep-url }})"
               embed-author-name: "${{ github.triggering_actor }}"
@@ -137,7 +135,7 @@ jobs:
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
           embed-title: "Security Pipeline jobs Completed."
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+          embed-description: "Security Scans Completed: [Details - ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
           embed-color: 629
