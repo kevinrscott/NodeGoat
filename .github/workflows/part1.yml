@@ -74,6 +74,9 @@ jobs:
         with:
           name: snyk-sca.sarif
           path: snyk.sarif
+      - name: Extract Artifact URL
+        run: |
+          echo "Artifact URL is: ${{ steps.upload_snyk.outputs.artifact-url }}"
           
   Discord-Snyk-Completed:
     runs-on: ubuntu-latest
