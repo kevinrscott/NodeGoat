@@ -15,7 +15,7 @@ jobs:
       - name: Discord Notification start
         uses: tsickert/discord-webhook@v5.3.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
           username: ${{github.repository}}
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
           embed-title: "Security Pipeline jobs are starting..."
@@ -85,7 +85,7 @@ jobs:
         - name: Discord Notification Synk Scan Complete
           uses: tsickert/discord-webhook@v5.3.0
           with:
-            webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+            webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
             username: ${{github.repository}}
             avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
             embed-title: "Snyk Scan Completed"
@@ -105,7 +105,7 @@ jobs:
       - name: Discord Notification End
         uses: tsickert/discord-webhook@v5.3.0
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
           username: ${{github.repository}}
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
           embed-title: "Security Pipeline jobs Completed."
