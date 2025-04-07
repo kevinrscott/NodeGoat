@@ -69,8 +69,8 @@ jobs:
           image: kevyy/assignment01:latest
           args: --file=Dockerfile
       - name: Upload report
-        id: upload-snyk
         uses: actions/upload-artifact@v4
+        id: upload-snyk
         with:
           name: snyk-sca.sarif
           path: snyk.sarif
@@ -87,7 +87,7 @@ jobs:
             avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
             embed-title: "Snyk Scan Completed"
             embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-            embed-description: "[Download SARIF report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.upload-snyk.outputs.artifact_id }})"
+            embed-description: "[Download SARIF report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts/${{ steps.upload-snyk.outputs.artifact-url }})"
             embed-author-name: "${{ github.triggering_actor }}"
             embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
             embed-color: 629
