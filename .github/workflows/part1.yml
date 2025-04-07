@@ -18,6 +18,8 @@ jobs:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
           username: ${{github.repository}}
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
+          thread_name: SNYK and SEMGREP Scans.
+          applied_tags: snyk
           embed-title: "Security Pipeline jobs are starting..."
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           embed-description: "[Action details ${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
@@ -88,6 +90,7 @@ jobs:
             webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
             username: ${{github.repository}}
             avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
+            thread-id: snyk
             embed-title: "Snyk Scan Completed"
             embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
             embed-description: "Uploaded File:"
@@ -107,6 +110,7 @@ jobs:
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK_TEST }}
           username: ${{github.repository}}
+          thread-id: snyk
           avatar-url: https://gravatar.com/avatar/be5d3fe06696117c467f199ddb4f1aed?s=400&d=robohash&r=g
           embed-title: "Security Pipeline jobs Completed."
           embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
