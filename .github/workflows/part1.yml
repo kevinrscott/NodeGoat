@@ -139,4 +139,4 @@ jobs:
           embed-author-name: "${{ github.triggering_actor }}"
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
           embed-color: 629
-          embed-footer-text: "SNYK and SEMGREP security scans both successfully completed.
+          embed-footer-text: "SNYK and SEMGREP security scans both successfully completed."
