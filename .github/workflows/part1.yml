@@ -25,6 +25,7 @@ jobs:
           embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
           embed-color: 629
           embed-footer-text: "Preparing to run SNYK and SEMGREP scans..."
+          thread-name: "Security Pipeline Thread"
               
   # Runs a semgrep SAST scan and uploads a SARIF file report.
   semgrep:
@@ -116,11 +117,11 @@ jobs:
               embed-title: "Semgrep Scan Completed"
               embed-url: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
               # Uses the output from the semgrep scan for artifact download.
-              embed-description: "Uploaded Report: [Semgrep Sarif Report](${{ needs.semgrep.outputs.semgrep-url }})"
+              embed-description: "Uploaded Report: [SEMGREP Sarif Report](${{ needs.semgrep.outputs.semgrep-url }})"
               embed-author-name: "${{ github.triggering_actor }}"
               embed-author-icon-url: https://gravatar.com/avatar/${{ github.triggering_actor }}?s=200
               embed-color: 629
-              embed-footer-text: "Semgrep Scan Completed."
+              embed-footer-text: "Semgrep Scan Completed. Click above link to download report."
 
   # Post a message to the ITAS Discord Channel when Pipeline finishes.
   Discord-Finish:
